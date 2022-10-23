@@ -133,3 +133,63 @@ app.post("/todos/", async (request, response) => {
   const Todo = await database.run(postTodoQuery);
   response.send("Todo Successfully Added");
 });
+
+// APi 5
+
+app.put("/todos/:todoId/", async (request, response) => {
+  const { todoId } = request.params;
+  const todoDetails = request.body;
+  const previousTodoQuery = `
+  SELECT * FROM todo
+  WHERE
+    id = ${todoId};`;
+  const previousTodo = await database.get(previousTodoQuery);
+  console.log(previousTodo);
+
+  const {
+    todo = previousTodo.todo,
+    priority = previousTodo.priority,
+    status = previousTodo.status,
+    category = previousTodo.category,
+    dueDate = previousTodo.due_date,
+  } = request.body;
+
+  const updateTodoQuery = `UPDATE
+      todo
+    SET
+       todo='${todo}',
+       priority='${priority}',
+       status='${status}'
+       category='${category}'
+       due_date='${dueDate}'
+      
+    WHERE
+      id = ${todoId};`;
+  await database.run(updateTodoQuery);
+
+  if (todoDetails.status === status) {
+    response.send("Status Updated");
+  } else if (todoDetails.priority === priority) {
+    response.send("Priority Updated");
+  } else if (todoDetails.todo === todo) {
+    response.send("Todo Updated");
+  } else if (todoDetails.category === category) {
+    response.send("Category Updated");
+  } else if (todoDetails.dueDate === dueDate) {
+    response.send("Due Date Updated");
+  }
+});
+
+//api 6
+
+app.delete("/todos/:todoId/", async (request, response) => {
+  const { todoId } = request.params;
+  const deleteTodoQuery = `DELETE FROM 
+      todo
+    WHERE
+     id = ${todoId};`;
+  await database.run(deleteTodoQuery);
+  response.send("Todo Deleted");
+});
+
+module.exports = app;

@@ -30,7 +30,7 @@ GET http://localhost:3000/todos/3
 
 ###
 //API 3
-GET http://localhost:3000/agenda/?date=2020-09-22
+GET http://localhost:3000/agenda/?date=2021-02-22
 
 ###
 //API 4 post
@@ -46,3 +46,55 @@ Content-Type: application/json
   "category": "HOME",
   "dueDate": "2021-02-22"
 }
+
+###
+
+PUT http://localhost:3000/todos/4
+Content-Type: application/json
+
+{
+ "status": "PENDING"
+}
+
+###
+
+
+PUT http://localhost:3000/todos/1
+Content-Type: application/json
+
+{
+  "priority": "HIGH"
+}
+
+###
+
+
+PUT http://localhost:3000/todos/2
+Content-Type: application/json
+
+{
+  "todo": "Clean the garden"
+}
+###
+
+
+PUT http://localhost:3000/todos/2
+Content-Type: application/json
+
+{
+  "category": "LEARNING"
+}
+
+###
+
+
+PUT http://localhost:3000/todos/5
+Content-Type: application/json
+
+{
+  "dueDate": "2021-01-12"
+}
+
+###
+
+DELETE http://localhost:3000/todos/5
